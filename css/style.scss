@@ -20,7 +20,7 @@ $red: #b45a4d;
 
 body {
   background-color: #E0F2FE;
-
+  font-family: monospace;
 
   .clock {
     position: relative;
@@ -28,12 +28,12 @@ body {
     height: 300px;
     background: $cream;
     border: 20px solid $dark;
-    margin: 20vh auto;
+    margin: 20vh auto 5vh auto;
 
     #start {
       @extend %start-stop-button-base;
       left: 80px;
-      background: #e08728;
+      background: #28e062;
     }
 
     #stop {
@@ -120,6 +120,45 @@ body {
     .ninety {
       @include transform-rotation(324deg);
     }
+
+    .digital-clock-wrapper {
+      height: 35px;
+      width: 105px;
+      margin: 160px auto 0px auto;
+      color: white;
+      text-align: center;
+      background: $dark;
+
+      #digital-clock {
+        padding-top: 5px;
+        font-size: 20px;
+      }
+    }
+  }
+
+  .measure-wrapper {
+    position: relative;
+    width: 350px;
+    margin: 0 auto;
+
+    .measure {
+      text-align: center;
+      width: 175px;
+
+      label {
+        font-size: 24px;
+        font-weight: 100;
+      }
+
+      button {
+        background-color: #E0F2FE;
+        color: #353535;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5em;
+        outline: none;
+      }
+    }
   }
 
   footer {
@@ -128,7 +167,6 @@ body {
     bottom: 0;
     width: 100%;
     background-color: $cream;
-    font-family: monospace;
     color: $dark;
     text-align: center;
   }

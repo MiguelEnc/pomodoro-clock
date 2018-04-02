@@ -108,13 +108,6 @@ body {
       body .measure-wrapper .measure label {
         font-size: 24px;
         font-weight: 100; }
-      body .measure-wrapper .measure button {
-        background-color: #E0F2FE;
-        color: #353535;
-        border: none;
-        cursor: pointer;
-        font-size: 1.5em;
-        outline: none; }
   body footer {
     position: fixed;
     left: 0;
@@ -124,4 +117,4 @@ body {
     color: #353535;
     text-align: center; }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.csss.map */
