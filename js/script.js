@@ -27,21 +27,39 @@ function timerCallBack() {
   digitalClock.text(minutes + ":" + (seconds < 10 ? "0"+seconds : seconds));
 }
 
-$("#start").click(function() {
+$("#start-stop").click(function() {
   if(!clockRunning){
     time = parseInt(sessionLength.text()) * 60;
     timer.start();
     clockRunning = true;
+    changeResetStyle(false);
+    changeStartStopButtonStyle(true);
+  } else {
+    timer.stop();
+    clockRunning = false;
+    changeResetStyle(true);
+    changeStartStopButtonStyle(false);
   }
 });
 
-$("#stop").click(function() {
-  if(clockRunning){
-    
-    timer.stop();
-    clockRunning = false;
-  }
+$("#reset").click(function() {
+  
 });
+
+function changeStartStopButtonStyle(started) {
+  if(started) {
+    $("#start-stop").addClass("started");
+    $("#start-stop").text("STOP");
+  } else {
+    $("#start-stop").removeClass("started");
+    $("#start-stop").text("START");
+  }
+}
+
+function changeResetStyle(active) {
+  $("#reset").css("cursor", active ? "pointer" : "not-allowed");
+  $("#reset").prop("disabled", !active);
+}
 
 $("#session-decrease").click(function() {
   if(!clockRunning){

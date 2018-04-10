@@ -1,9 +1,10 @@
-body .clock #start, body .clock #stop {
-  position: relative;
-  top: -50px;
-  width: 70px;
+body .clock #start-stop, body .clock #reset {
+  position: absolute;
+  left: 70px;
+  width: 140px;
   color: white;
   height: 30px;
+  font-weight: 600;
   cursor: pointer;
   border: none;
   -webkit-transition: all .5s;
@@ -23,13 +24,15 @@ body {
     height: 300px;
     background: #f7f3d9;
     border: 20px solid #353535;
-    margin: 6vh auto; }
-    body .clock #start {
-      left: 60px;
+    margin: 8vh auto; }
+    body .clock #start-stop {
+      top: -50px;
       background: #28e062; }
-    body .clock #stop {
-      left: 85px;
-      background: #bf4532; }
+    body .clock .started {
+      background-color: #b45a4d !important; }
+    body .clock #reset {
+      top: 320px;
+      background: #d8a059; }
     body .clock #axis {
       background: #f7f3d9;
       position: absolute;
