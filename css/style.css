@@ -1,7 +1,8 @@
 body .clock #start, body .clock #stop {
   position: relative;
   top: -50px;
-  width: 55px;
+  width: 70px;
+  color: white;
   height: 30px;
   cursor: pointer;
   border: none;
@@ -11,18 +12,23 @@ body .clock #start, body .clock #stop {
 body {
   background-color: #E0F2FE;
   font-family: monospace; }
+  body .time-label-wrapper {
+    text-align: center;
+    margin-top: 15vh; }
+    body .time-label-wrapper #time-label {
+      font-size: 3em; }
   body .clock {
     position: relative;
     width: 300px;
     height: 300px;
     background: #f7f3d9;
     border: 20px solid #353535;
-    margin: 20vh auto 5vh auto; }
+    margin: 6vh auto; }
     body .clock #start {
-      left: 80px;
+      left: 60px;
       background: #28e062; }
     body .clock #stop {
-      left: 105px;
+      left: 85px;
       background: #bf4532; }
     body .clock #axis {
       background: #f7f3d9;
@@ -58,7 +64,6 @@ body {
       height: 18px;
       background: #353535;
       border-radius: 2px;
-      z-index: 1;
       -webkit-transform-origin: 50% 140px;
       transform-origin: 50% 140px; }
     body .clock .ten {

@@ -5,10 +5,12 @@
   <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-
+  <div class="time-label-wrapper">
+    <label id="time-label">Work Time</label>
+  </div>
   <div class="clock">
-    <button id="start"></button>
-    <button id="stop"></button>
+    <button id="start">START</button>
+    <button id="stop">STOP</button>
     <span id="axis"></span>
     <span id="hand"></span>
     <span class="clock-face"></span>
@@ -47,6 +49,9 @@
   <footer>
     <p>Design inspired on <a href="https://codepen.io/nDav/full/QbjaNN/" target="_blank">Nail Davlyatchin's pen</a></p>
   </footer>
+  <script type="text/javascript" src="js/vendors/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/vendors/moment.js"></script>
+  <script type="text/javascript" src="js/vendors/moment-timer.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
