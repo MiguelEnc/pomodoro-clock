@@ -15,7 +15,7 @@ body {
   font-family: monospace; }
   body .time-label-wrapper {
     text-align: center;
-    margin-top: 15vh; }
+    margin-top: 10vh; }
     body .time-label-wrapper #time-label {
       font-size: 3em; }
   body .clock {

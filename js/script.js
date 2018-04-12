@@ -12,6 +12,9 @@ var timer = {
   timer: new moment.duration(1, "seconds")
       .timer({loop: true, start: false}, timerCallBack),
   start: function() {
+    if(time == 0) {
+      time = parseInt(sessionLength.text()) * 60;
+    }
     this.timer.start();
   },
   stop: function() {
@@ -29,36 +32,43 @@ function timerCallBack() {
 
 $("#start-stop").click(function() {
   if(!clockRunning){
-    time = parseInt(sessionLength.text()) * 60;
     timer.start();
     clockRunning = true;
-    changeResetStyle(false);
-    changeStartStopButtonStyle(true);
+    changeWorkingPausedStyles(true);
   } else {
     timer.stop();
     clockRunning = false;
-    changeResetStyle(true);
-    changeStartStopButtonStyle(false);
+    changeWorkingPausedStyles(false);
   }
 });
 
 $("#reset").click(function() {
-  
+  if(!clockRunning) {
+    time = parseInt(sessionLength.text()) * 60;
+    digitalClock.text(sessionLength.text() + ":00");
+  }
 });
 
-function changeStartStopButtonStyle(started) {
-  if(started) {
+function changeWorkingPausedStyles(running) {
+  if(running) {
     $("#start-stop").addClass("started");
     $("#start-stop").text("STOP");
+    $("#reset").css("cursor", "not-allowed");
+    $("#reset").prop("disabled", true);
+    $("#session-increase").css("cursor", "not-allowed");
+    $("#session-decrease").css("cursor", "not-allowed");
+    $("#break-increase").css("cursor", "not-allowed");
+    $("#break-decrease").css("cursor", "not-allowed");
   } else {
     $("#start-stop").removeClass("started");
     $("#start-stop").text("START");
+    $("#reset").css("cursor", "pointer");
+    $("#reset").prop("disabled", false);
+    $("#session-increase").css("cursor", "pointer");
+    $("#session-decrease").css("cursor", "pointer");
+    $("#break-increase").css("cursor", "pointer");
+    $("#break-decrease").css("cursor", "pointer");
   }
-}
-
-function changeResetStyle(active) {
-  $("#reset").css("cursor", active ? "pointer" : "not-allowed");
-  $("#reset").prop("disabled", !active);
 }
 
 $("#session-decrease").click(function() {
@@ -66,6 +76,7 @@ $("#session-decrease").click(function() {
     var length = parseInt(sessionLength.text());
     if(length > 1) {
       sessionLength.text(length-1);
+      digitalClock.text((length-1)+":00");
     }
   }
 });
@@ -74,6 +85,7 @@ $("#session-increase").click(function() {
   if(!clockRunning){
     var length = parseInt(sessionLength.text());
     sessionLength.text(length+1);
+    digitalClock.text((length+1)+":00");
   }
 });
 
