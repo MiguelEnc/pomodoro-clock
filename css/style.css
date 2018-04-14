@@ -37,7 +37,7 @@ body {
       background: #f7f3d9;
       position: absolute;
       top: 0;
-      left: 0;
+      left: -3px;
       right: 0;
       bottom: 0;
       margin: auto;
@@ -49,20 +49,22 @@ body {
     body .clock #hand {
       display: block;
       position: absolute;
-      top: 20px;
+      top: 10px;
       left: 50%;
-      margin-left: -3px;
+      margin-left: -5px;
       width: 6px;
-      height: 160px;
+      height: 140px;
       background: #b45a4d;
       border-radius: 3px;
-      z-index: 2; }
+      z-index: 2;
+      transform-origin: 50% 100%;
+      transition: all 0s; }
     body .clock .clock-face {
       display: block;
       position: absolute;
       top: 10px;
       left: 50%;
-      margin-left: -2px;
+      margin-left: -4px;
       width: 4px;
       height: 18px;
       background: #353535;

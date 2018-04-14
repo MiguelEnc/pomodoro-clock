@@ -1,19 +1,25 @@
 var sessionLength = $("#session-length"),
     digitalClock  = $("#digital-clock"),    
     breakLength   = $("#break-length"),
-    timeLabel     = $("#time-label");
+    timeLabel     = $("#time-label"),
+    hand          = $("#hand");
   
 var clockRunning = false,
-    currentlyWorking = true;
+    currentlyWorking = true,
+    paused = false;
 
-var minutes = 0, seconds = 0, time = 0;
+var minutes = 0, 
+    seconds = 0, 
+    timeForDigitalClock = 0,
+    timeForHandDegrees = 0;
 
 var timer = {
   timer: new moment.duration(1, "seconds")
       .timer({loop: true, start: false}, timerCallBack),
   start: function() {
-    if(time == 0) {
-      time = parseInt(sessionLength.text()) * 60;
+    if(!paused) {
+      timeForDigitalClock = parseInt(sessionLength.text()) * 60;
+      timeForHandDegrees = parseInt(sessionLength.text()) * 60;
     }
     this.timer.start();
   },
@@ -23,11 +29,13 @@ var timer = {
 }
 
 function timerCallBack() {
-
-  time = time-1;
-  minutes = parseInt(time/60);
-  seconds = time%60;
+  timeForDigitalClock = timeForDigitalClock-1;
+  minutes = parseInt(timeForDigitalClock/60);
+  seconds = timeForDigitalClock%60;
   digitalClock.text(minutes + ":" + (seconds < 10 ? "0"+seconds : seconds));
+
+  var degress = ((60 - seconds) / timeForHandDegrees) * 360;
+  hand.css("transform", "rotate("+ degress +"deg)");
 }
 
 $("#start-stop").click(function() {
@@ -37,6 +45,7 @@ $("#start-stop").click(function() {
     changeWorkingPausedStyles(true);
   } else {
     timer.stop();
+    paused = true;
     clockRunning = false;
     changeWorkingPausedStyles(false);
   }
@@ -44,8 +53,11 @@ $("#start-stop").click(function() {
 
 $("#reset").click(function() {
   if(!clockRunning) {
-    time = parseInt(sessionLength.text()) * 60;
+    timeForDigitalClock = parseInt(sessionLength.text()) * 60;
+    timeForHandDegrees = parseInt(sessionLength.text()) * 60;
+    paused = false;
     digitalClock.text(sessionLength.text() + ":00");
+    hand.css("transform", "rotate(0deg)");
   }
 });
 
@@ -77,6 +89,8 @@ $("#session-decrease").click(function() {
     if(length > 1) {
       sessionLength.text(length-1);
       digitalClock.text((length-1)+":00");
+      paused = false;
+      hand.css("transform", "rotate(0deg)");
     }
   }
 });
@@ -86,6 +100,8 @@ $("#session-increase").click(function() {
     var length = parseInt(sessionLength.text());
     sessionLength.text(length+1);
     digitalClock.text((length+1)+":00");
+    paused = false;
+    hand.css("transform", "rotate(0deg)");
   }
 });
 
