@@ -72,33 +72,73 @@ body {
       border-radius: 2px;
       -webkit-transform-origin: 50% 140px;
       transform-origin: 50% 140px; }
+      body .clock .clock-face p {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        margin: 20px -10px; }
     body .clock .ten {
       -webkit-transform: rotate(36deg);
       transform: rotate(36deg); }
+      body .clock .ten p {
+        -webkit-transform: rotate(324deg);
+        transform: rotate(324deg);
+        margin: 18px -14px; }
     body .clock .twenty {
       -webkit-transform: rotate(72deg);
       transform: rotate(72deg); }
+      body .clock .twenty p {
+        -webkit-transform: rotate(288deg);
+        transform: rotate(288deg);
+        margin: 11px -23px; }
     body .clock .thirty {
       -webkit-transform: rotate(108deg);
       transform: rotate(108deg); }
+      body .clock .thirty p {
+        -webkit-transform: rotate(252deg);
+        transform: rotate(252deg);
+        margin: 18px -15px; }
     body .clock .fourty {
       -webkit-transform: rotate(144deg);
       transform: rotate(144deg); }
+      body .clock .fourty p {
+        -webkit-transform: rotate(216deg);
+        transform: rotate(216deg);
+        margin: 20px -7px; }
     body .clock .fifty {
       -webkit-transform: rotate(180deg);
       transform: rotate(180deg); }
+      body .clock .fifty p {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        margin: 20px 10px; }
     body .clock .sixty {
       -webkit-transform: rotate(216deg);
       transform: rotate(216deg); }
+      body .clock .sixty p {
+        -webkit-transform: rotate(144deg);
+        transform: rotate(144deg);
+        margin: 16px 7px; }
     body .clock .seventy {
       -webkit-transform: rotate(252deg);
       transform: rotate(252deg); }
+      body .clock .seventy p {
+        -webkit-transform: rotate(108deg);
+        transform: rotate(108deg);
+        margin: 15px 2px; }
     body .clock .eighty {
       -webkit-transform: rotate(288deg);
       transform: rotate(288deg); }
+      body .clock .eighty p {
+        -webkit-transform: rotate(72deg);
+        transform: rotate(72deg);
+        margin: 16px 2px; }
     body .clock .ninety {
       -webkit-transform: rotate(324deg);
       transform: rotate(324deg); }
+      body .clock .ninety p {
+        -webkit-transform: rotate(36deg);
+        transform: rotate(36deg);
+        margin: 20px -2px; }
     body .clock .digital-clock-wrapper {
       height: 35px;
       width: 105px;

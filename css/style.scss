@@ -3,9 +3,15 @@ $dark: #353535;
 $red: #b45a4d;
 $red2: #bf4532;
 
-@mixin transform-rotation($degrees){
+@mixin percentage-line-rotation($degrees){
   -webkit-transform: rotate($degrees);
   transform: rotate($degrees);
+}
+
+@mixin percentage-indicator-rotation($degrees, $top-down, $left-right){
+  -webkit-transform: rotate($degrees);
+  transform: rotate($degrees);
+  margin: $top-down $left-right
 }
 
 %button-base {
@@ -101,42 +107,82 @@ body {
       border-radius: 2px;
       -webkit-transform-origin: 50% 140px;
       transform-origin: 50% 140px;
+
+      p {
+        @include percentage-indicator-rotation(0deg, 20px, -10px);
+      }
     }
 
     .ten {
-      @include transform-rotation(36deg);
+      @include percentage-line-rotation(36deg);
+
+      p {
+        @include percentage-indicator-rotation(324deg, 18px, -14px);
+      }
     }
     
     .twenty {
-      @include transform-rotation(72deg);
+      @include percentage-line-rotation(72deg);
+
+      p {
+        @include percentage-indicator-rotation(288deg, 11px, -23px);
+      }
     }
     
     .thirty {
-      @include transform-rotation(108deg);
+      @include percentage-line-rotation(108deg);
+
+      p {
+        @include percentage-indicator-rotation(252deg, 18px, -15px);
+      }
     }
     
     .fourty {
-      @include transform-rotation(144deg);
+      @include percentage-line-rotation(144deg);
+
+      p {
+        @include percentage-indicator-rotation(216deg, 20px, -7px);
+      }
     }
     
     .fifty {
-      @include transform-rotation(180deg);
+      @include percentage-line-rotation(180deg);
+
+      p {
+        @include percentage-indicator-rotation(180deg, 20px, 10px);
+      }
     }
     
     .sixty {
-      @include transform-rotation(216deg);
+      @include percentage-line-rotation(216deg);
+
+      p {
+        @include percentage-indicator-rotation(144deg, 16px, 7px);
+      }
     }
     
     .seventy {
-      @include transform-rotation(252deg);
+      @include percentage-line-rotation(252deg);
+
+      p {
+        @include percentage-indicator-rotation(108deg, 15px, 2px);
+      }
     }
     
     .eighty {
-      @include transform-rotation(288deg);
+      @include percentage-line-rotation(288deg);
+
+      p {
+        @include percentage-indicator-rotation(72deg, 16px, 2px);
+      }
     }
     
     .ninety {
-      @include transform-rotation(324deg);
+      @include percentage-line-rotation(324deg);
+
+      p {
+        @include percentage-indicator-rotation(36deg, 20px, -2px);
+      }
     }
 
     .digital-clock-wrapper {
