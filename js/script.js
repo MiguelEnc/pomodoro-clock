@@ -8,18 +8,42 @@ var clockRunning = false,
     currentlyWorking = true,
     paused = false;
 
-var minutes = 0, 
-    seconds = 0, 
-    timeForDigitalClock = 0,
-    timeForHandDegrees = 0;
+var clockTime = {
+  time: 0,
+  total: 0,
+  // Stage can be session or break time
+  set: function(stage) {
+    this.time = parseInt(stage) * 60;
+    this.total = parseInt(stage) * 60;
+  },
+  recalculate: function() {
+    if(this.time - 1 > 0){
+      this.time = this.time - 1;
+    } else {
+      changeStage();
+    }
+  },
+  minutes: function() {
+    return parseInt(this.time / 60);
+  },
+  seconds: function() {
+    return this.time % 60;
+  },
+  get: function() {
+    return this.time;
+  },
+  totalTime: function() {
+    return this.total;
+  }
+}
 
 var timer = {
   timer: new moment.duration(1, "seconds")
       .timer({loop: true, start: false}, timerCallBack),
   start: function() {
     if(!paused) {
-      timeForDigitalClock = parseInt(sessionLength.text()) * 60;
-      timeForHandDegrees = parseInt(sessionLength.text()) * 60;
+      var stage = currentlyWorking ? sessionLength.text() : breakLength.text();
+      clockTime.set(stage);
     }
     this.timer.start();
   },
@@ -29,16 +53,32 @@ var timer = {
 }
 
 function timerCallBack() {
-  timeForDigitalClock = timeForDigitalClock-1;
-  minutes = parseInt(timeForDigitalClock/60);
-  seconds = timeForDigitalClock%60;
-  digitalClock.text(minutes + ":" + (seconds < 10 ? "0"+seconds : seconds));
+  clockTime.recalculate();
+  var formatedSeconds = clockTime.seconds();
+  formatedSeconds = formatedSeconds < 10 ? "0" + formatedSeconds : formatedSeconds;
 
-  var degress = ((60 - seconds) / timeForHandDegrees) * 360;
+  digitalClock.text(clockTime.minutes() + ":" + formatedSeconds);
+
+  var degress = ((clockTime.totalTime() - clockTime.get()) / clockTime.totalTime()) * 360;
   hand.css("transform", "rotate("+ degress +"deg)");
 }
 
+function changeStage() {
+  var stage = "";
+  if(currentlyWorking) {
+    stage = breakLength.text();
+    currentlyWorking = false;
+    timeLabel.text("Break Time!");
+  } else {
+    stage = sessionLength.text();
+    currentlyWorking = true;
+    timeLabel.text("Work Time!");
+  }
+  clockTime.set(stage);
+}
+
 $("#start-stop").click(function() {
+  timeLabel.css("visibility", "visible");
   if(!clockRunning){
     timer.start();
     clockRunning = true;
@@ -53,8 +93,9 @@ $("#start-stop").click(function() {
 
 $("#reset").click(function() {
   if(!clockRunning) {
-    timeForDigitalClock = parseInt(sessionLength.text()) * 60;
-    timeForHandDegrees = parseInt(sessionLength.text()) * 60;
+    timeLabel.css("visibility", "hidden");
+    clockTime.set(sessionLength.text());
+    currentlyWorking = true;
     paused = false;
     digitalClock.text(sessionLength.text() + ":00");
     hand.css("transform", "rotate(0deg)");
@@ -109,7 +150,10 @@ $("#break-decrease").click(function() {
   if(!clockRunning){
     var length = parseInt(breakLength.text());
     if(length > 1){
+      paused = false;
       breakLength.text(length-1);
+      digitalClock.text((length-1)+":00");
+      hand.css("transform", "rotate(0deg)");
     }
   }
 });
@@ -117,6 +161,9 @@ $("#break-decrease").click(function() {
 $("#break-increase").click(function() {
   if(!clockRunning){
     var length = parseInt(breakLength.text());
+    paused = false;
     breakLength.text(length+1);
+    digitalClock.text((length-1)+":00");
+    hand.css("transform", "rotate(0deg)");
   }
 });

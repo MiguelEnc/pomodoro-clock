@@ -17,7 +17,8 @@ body {
     text-align: center;
     margin-top: 10vh; }
     body .time-label-wrapper #time-label {
-      font-size: 3em; }
+      font-size: 3em;
+      visibility: hidden; }
   body .clock {
     position: relative;
     width: 300px;
