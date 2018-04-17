@@ -39,7 +39,7 @@ var clockTime = {
 
 var timer = {
   timer: new moment.duration(1, "seconds")
-      .timer({loop: true, start: false}, timerCallBack),
+      .timer({loop: true, start: false}, callback),
   start: function() {
     if(!paused) {
       var stage = currentlyWorking ? sessionLength.text() : breakLength.text();
@@ -52,7 +52,10 @@ var timer = {
   }
 }
 
-function timerCallBack() {
+/**
+ * Updates the clock time shown
+ */
+function callback() {
   clockTime.recalculate();
   var formatedSeconds = clockTime.seconds();
   formatedSeconds = formatedSeconds < 10 ? "0" + formatedSeconds : formatedSeconds;
@@ -63,17 +66,13 @@ function timerCallBack() {
   hand.css("transform", "rotate("+ degress +"deg)");
 }
 
+/**
+ * Changes working/chilling stages
+ */
 function changeStage() {
-  var stage = "";
-  if(currentlyWorking) {
-    stage = breakLength.text();
-    currentlyWorking = false;
-    timeLabel.text("Break Time!");
-  } else {
-    stage = sessionLength.text();
-    currentlyWorking = true;
-    timeLabel.text("Work Time!");
-  }
+  var stage = currentlyWorking ? breakLength.text() : sessionLength.text();
+  timeLabel.text(currentlyWorking ? "Break Time!" : "Work Time!");
+  currentlyWorking = !currentlyWorking;
   clockTime.set(stage);
 }
 
@@ -102,6 +101,89 @@ $("#reset").click(function() {
   }
 });
 
+$("#session-decrease").click(function() {
+  changeSessionLength(false);
+});
+
+$("#session-increase").click(function() {
+  changeSessionLength(true);
+});
+
+$("#break-decrease").click(function() {
+  changeBreakLength(true);
+});
+
+$("#break-increase").click(function() {
+  changeBreakLength(false);
+});
+
+
+/**
+ * Displays the session length adjustment
+ * 
+ * @param {boolean} adding wether is adding or substracting minutes
+ */
+function changeSessionLength(adding) {
+  var length = parseInt(sessionLength.text());
+
+  length = changeLength(adding, length);
+  
+  sessionLength.text(length);
+
+  if(currentlyWorking)
+    digitalClock.text(length + ":00");
+}
+
+/**
+ * Displays the break length adjustment
+ * 
+ * @param {boolean} adding wether is adding or substracting minutes
+ */
+function changeBreakLength(adding) {
+  var length = parseInt(breakLength.text());
+
+  length = changeLength(adding, length);
+
+  breakLength.text(length);
+
+  if(!currentlyWorking)
+    digitalClock.text(length + ":00");
+}
+
+/**
+ * Calculates the new length for session or break adjustment
+ * and applies common logic
+ * 
+ * @param {boolean} adding wether is adding or substracting minutes
+ * @param {number} currentLength session or break current length
+ */
+function changeLength(adding, currentLength) {
+  if(!clockRunning){
+
+    if(adding){
+
+      currentLength = currentLength + 1;
+
+    } else {
+
+      if(currentLength - 1 > 0) {
+        currentLength = currentLength - 1;
+      }
+
+    }
+
+    hand.css("transform", "rotate(0deg)");
+    paused = false;
+  }
+
+  return currentLength;
+}
+
+/**
+ * Changes buttons styles when clock is running or paused
+ * 
+ * @param {boolean} running clock state
+ */
 function changeWorkingPausedStyles(running) {
   if(running) {
     $("#start-stop").addClass("started");
@@ -123,47 +205,3 @@ function changeWorkingPausedStyles(running) {
     $("#break-decrease").css("cursor", "pointer");
   }
 }
-
-$("#session-decrease").click(function() {
-  if(!clockRunning){
-    var length = parseInt(sessionLength.text());
-    if(length > 1) {
-      sessionLength.text(length-1);
-      digitalClock.text((length-1)+":00");
-      paused = false;
-      hand.css("transform", "rotate(0deg)");
-    }
-  }
-});
-
-$("#session-increase").click(function() {
-  if(!clockRunning){
-    var length = parseInt(sessionLength.text());
-    sessionLength.text(length+1);
-    digitalClock.text((length+1)+":00");
-    paused = false;
-    hand.css("transform", "rotate(0deg)");
-  }
-});
-
-$("#break-decrease").click(function() {
-  if(!clockRunning){
-    var length = parseInt(breakLength.text());
-    if(length > 1){
-      paused = false;
-      breakLength.text(length-1);
-      digitalClock.text((length-1)+":00");
-      hand.css("transform", "rotate(0deg)");
-    }
-  }
-});
-
-$("#break-increase").click(function() {
-  if(!clockRunning){
-    var length = parseInt(breakLength.text());
-    paused = false;
-    breakLength.text(length+1);
-    digitalClock.text((length-1)+":00");
-    hand.css("transform", "rotate(0deg)");
-  }
-});
